@@ -80,9 +80,20 @@ public class Player : MonoBehaviour {
         StartCoroutine(TripleShotPowerDownRoutine());
     }
 
+    public void SpeedBoostOn()
+    {
+        playerSpeed *= 1.5f;
+        StartCoroutine(SpeedBoostPowerDownRoutine());
+    }
     private IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
         canTripleShot = false;
+    }
+
+    private IEnumerator SpeedBoostPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        playerSpeed /= 1.5f;
     }
 }
