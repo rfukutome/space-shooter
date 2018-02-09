@@ -14,6 +14,8 @@ public class Player : MonoBehaviour {
     [SerializeField] private float _fireRate = 0.25f;
     [SerializeField] private int _health = 3;
     [SerializeField] private float playerSpeed = 5.0f;
+    [SerializeField] private GameObject[] _damageSprite;
+
     private float input_x = 0;
     private float input_y = 0;
     private float canFire = 0.0f;
@@ -126,6 +128,15 @@ public class Player : MonoBehaviour {
         {
             _health -= 1;
             _uiManager.UpdateLives(_health);
+            if(_health == 2)
+            {
+                _damageSprite[0].SetActive(true);
+            }
+            else if(_health == 1)
+            {
+                _damageSprite[1].SetActive(true);
+            }
+
             if (_health <= 0)
             {
                 Death();
