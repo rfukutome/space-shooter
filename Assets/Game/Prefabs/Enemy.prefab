@@ -103,6 +103,7 @@ MonoBehaviour:
   _health: 50
   explosionPrefab: {fileID: 1246322357039558, guid: 85336552c769d8d42bfc61a7246953dc,
     type: 2}
+  _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!212 &212642649270813326
 SpriteRenderer:
   m_ObjectHideFlags: 1

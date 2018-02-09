@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public bool canTripleShot = false;
-    private UIManager _uiManager;
+    
 
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleLaserPrefab;
@@ -17,7 +17,9 @@ public class Player : MonoBehaviour {
     private float input_x = 0;
     private float input_y = 0;
     private float canFire = 0.0f;
+    private UIManager _uiManager;
     private GameManager _gameManager;
+    private AudioSource _audioSource;
     [SerializeField] private bool hasShields;
 	// Use this for initialization
 	void Start () {
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour {
         _uiManager = GameObject.FindObjectOfType<UIManager>();
         _gameManager = GameObject.FindObjectOfType<GameManager>();
         _uiManager.UpdateLives(_health);
+        _audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -42,6 +45,7 @@ public class Player : MonoBehaviour {
         {
             if (Time.time > canFire)
             {
+                _audioSource.Play();
                 if (canTripleShot)
                 {
                     Instantiate(_tripleLaserPrefab, transform.position, Quaternion.identity);

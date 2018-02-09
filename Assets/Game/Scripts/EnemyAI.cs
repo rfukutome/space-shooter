@@ -7,7 +7,7 @@ public class EnemyAI : MonoBehaviour {
     [SerializeField] private int _health = 50;
     
     [SerializeField] private GameObject explosionPrefab;
-
+    [SerializeField] private AudioClip _audioClip;
     private UIManager _canvas;
 	// Use this for initialization
 	void Start () {
@@ -31,6 +31,7 @@ public class EnemyAI : MonoBehaviour {
         {
             Instantiate(explosionPrefab, transform.position, transform.rotation);
             _canvas.UpdateScore();
+            AudioSource.PlayClipAtPoint(_audioClip, Camera.main.transform.position);
             Destroy(this.gameObject);
         }
     }
