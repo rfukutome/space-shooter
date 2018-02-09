@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/SpaceShooter/Scenes/game.unity
+    guid: 83437b5ea740c2541a8612294af1b9ed
