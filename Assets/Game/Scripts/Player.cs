@@ -8,16 +8,21 @@ public class Player : MonoBehaviour {
 
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleLaserPrefab;
+    [SerializeField] private GameObject _playerExplosionPrefab;
+    [SerializeField] private GameObject _shieldSprite;
     [SerializeField] private float _fireRate = 0.25f;
-
+    [SerializeField] private int _health = 5;
     [SerializeField] private float playerSpeed = 5.0f;
     private float input_x = 0;
     private float input_y = 0;
     private float canFire = 0.0f;
 
+    [SerializeField] private bool hasShields;
 	// Use this for initialization
 	void Start () {
         transform.position = new Vector3(0, 0, 0);
+        hasShields = false;
+        _shieldSprite.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -95,5 +100,44 @@ public class Player : MonoBehaviour {
     {
         yield return new WaitForSeconds(5.0f);
         playerSpeed /= 1.5f;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            EnemyAI enemy = other.gameObject.GetComponent<EnemyAI>();
+            enemy.TakeDamage(10);
+            TakeDamage();
+        }
+    }
+
+    private void TakeDamage()
+    {
+        if (!hasShields)
+        {
+            _health -= 1;
+            if (_health <= 0)
+            {
+                Death();
+            }
+        }
+        else
+        {
+            hasShields = false;
+            _shieldSprite.SetActive(false);
+        }
+    }
+
+    private void Death()
+    {
+        Instantiate(_playerExplosionPrefab, transform.position, transform.rotation);
+        Destroy(this.gameObject);
+    }
+
+    public void ActivateShields()
+    {
+        hasShields = true;
+        _shieldSprite.SetActive(true);
     }
 }
