@@ -5,24 +5,28 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public bool canTripleShot = false;
+    private UIManager _uiManager;
 
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleLaserPrefab;
     [SerializeField] private GameObject _playerExplosionPrefab;
     [SerializeField] private GameObject _shieldSprite;
     [SerializeField] private float _fireRate = 0.25f;
-    [SerializeField] private int _health = 5;
+    [SerializeField] private int _health = 3;
     [SerializeField] private float playerSpeed = 5.0f;
     private float input_x = 0;
     private float input_y = 0;
     private float canFire = 0.0f;
-
+    private GameManager _gameManager;
     [SerializeField] private bool hasShields;
 	// Use this for initialization
 	void Start () {
         transform.position = new Vector3(0, 0, 0);
         hasShields = false;
         _shieldSprite.SetActive(false);
+        _uiManager = GameObject.FindObjectOfType<UIManager>();
+        _gameManager = GameObject.FindObjectOfType<GameManager>();
+        _uiManager.UpdateLives(_health);
 	}
 	
 	// Update is called once per frame
@@ -117,6 +121,7 @@ public class Player : MonoBehaviour {
         if (!hasShields)
         {
             _health -= 1;
+            _uiManager.UpdateLives(_health);
             if (_health <= 0)
             {
                 Death();
@@ -132,6 +137,7 @@ public class Player : MonoBehaviour {
     private void Death()
     {
         Instantiate(_playerExplosionPrefab, transform.position, transform.rotation);
+        _gameManager.SetGameOver();
         Destroy(this.gameObject);
     }
 

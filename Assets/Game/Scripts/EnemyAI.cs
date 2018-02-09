@@ -5,12 +5,13 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour {
     [SerializeField] private float _speed = 2.0f;
     [SerializeField] private int _health = 50;
-
+    
     [SerializeField] private GameObject explosionPrefab;
 
+    private UIManager _canvas;
 	// Use this for initialization
 	void Start () {
-		
+        _canvas = GameObject.FindObjectOfType<UIManager>();
 	}
 	
 	// Update is called once per frame
@@ -29,6 +30,7 @@ public class EnemyAI : MonoBehaviour {
         if(_health <= 0)
         {
             Instantiate(explosionPrefab, transform.position, transform.rotation);
+            _canvas.UpdateScore();
             Destroy(this.gameObject);
         }
     }
